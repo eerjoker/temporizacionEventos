@@ -22,41 +22,38 @@ function crearAdministradorEventos() {
     return evento
   }
 
-  // Se le asigna un nombre para poder acceder a las funciones desde dentro del objeto
-  const administradorEventos = {
-    agendarEvento: (nombreEvento, regla, accion) => {
+  return {
+    agendarEvento(nombreEvento, regla, accion) {
       const evento = crearEvento({ nombreEvento, regla, accion })
       const eventoAgendado = schedule.scheduleJob(evento.nombre, evento.regla, evento.accion)
       validarEvento(eventoAgendado, 'No se pudo agendar el evento. Los valores enviados para agendar no son válidos.')
       eventosActivos[nombreEvento] = eventoAgendado
     },  
-    modificarEvento: (nombreEvento, regla) => {
+    modificarEvento(nombreEvento, regla) {
       try {
         const evento = buscarEvento(nombreEvento, eventosActivos)
         evento.reschedule(regla)
       } catch(error) {
         if(error.type == 'ERROR_EVENTO_NULO') {
-          administradorEventos.reactivarEvento(nombreEvento, regla)
+          this.reactivarEvento(nombreEvento, regla)
         } else {
           throw error
         }
       }
     },
-    cancelarEvento: (nombreEvento) => {
+    cancelarEvento(nombreEvento) {
       const evento = buscarEvento(nombreEvento, eventosActivos)
       evento.cancel()
       eventosCancelados[nombreEvento] = evento
       delete eventosActivos[nombreEvento]
     },
-    reactivarEvento: (nombreEvento, regla) => {
+    reactivarEvento(nombreEvento, regla) {
       const evento = buscarEvento(nombreEvento, eventosCancelados)
       evento.schedule(regla)
       eventosActivos[nombreEvento] = evento
       delete eventosCancelados[nombreEvento]
     }
   }
-
-  return administradorEventos
 }
 
 export { crearAdministradorEventos }
