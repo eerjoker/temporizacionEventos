@@ -1,5 +1,5 @@
 import { RecurrenceRule } from "node-schedule"
-import { crearNombreEvento } from "./nombreEvento.js"
+import { crearNombreEvento } from "./NombreEvento.js"
 import { crearErrorDatosInvalidos } from "../errors/ErrorDatosInvalidos.js"
 
 /**
