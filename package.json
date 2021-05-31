@@ -1,13 +1,13 @@
 {
   "type": "module",
-  "name": "clase6",
+  "name": "temporizacionEventos",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
     "start": "node src/main.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "eerjoker",
   "license": "ISC",
   "description": "",
   "dependencies": {
